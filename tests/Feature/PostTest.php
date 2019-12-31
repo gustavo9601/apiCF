@@ -106,4 +106,23 @@ class PostTest extends TestCase
     }
 
 
+    public function test_shows_posts(){
+        create('App\User');
+        $post = create('App\Models\Post');
+
+
+        $response = $this->json('GET', $this->baseUrl . 'posts/' . $post->id);
+
+        $response->assertStatus(200);
+
+        $response->assertJson([
+            'data' => [
+                'id' => $post->id,
+                'title' => $post->title
+            ]
+        ]);
+
+    }
+
+
 }

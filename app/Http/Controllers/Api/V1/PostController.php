@@ -25,7 +25,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
 
@@ -37,26 +37,30 @@ class PostController extends Controller
         $post = Post::create($request->all());
 
         return response()->json([
-           'data' => $post
+            'data' => $post
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
+
     public function show(Post $post)
     {
-        //
+    //Como recibimos el post id en la peticion, podemos retornar el post por inyeccion se retorna todo lo encontrado en la consulta
+        return response()->json([
+            'data' => $post
+        ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
 
@@ -66,7 +70,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
 
-       $post->update($request->all());
+        $post->update($request->all());
 
         return response()->json([
             'data' => $post
@@ -78,7 +82,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
