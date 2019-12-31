@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -29,7 +30,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -40,12 +41,34 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
+
+
+        //verifica que si la peticion espera un json en las cabeceras
+        if ($request->expectsJson()) {
+            return $this->handleApiExceptions($request, $exception);
+        }
+
         return parent::render($request, $exception);
     }
+
+//Funcion que nos ayudara a validar el tipo de error y excepciones
+    public function handleApiExceptions($request, $exception)
+    {
+
+        if ($exception instanceof ModelNotFoundException) {
+            return response()->json([
+                'error' => 'Model not found '
+            ], 404);
+        }
+
+        return parent::render($request, $exception);
+
+    }
+
 }
