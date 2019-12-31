@@ -79,4 +79,31 @@ class PostTest extends TestCase
     }
 
 
+
+    public function test_updates_posts(){
+
+
+        $data = [
+            'title' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),  //tamaño, datos variables
+            'content' => $this->faker->text($maxNBChars = 200),   //cantidad de letras
+        ];
+
+
+        create('App\User');
+        $post = create('App\Models\Post');
+
+        $response = $this->json('PUT', $this->baseUrl . "posts/" . $post->id, $data);
+        $response->assertStatus(200);
+
+        $post = $post->fresh();  //retorna al objeto actualizado
+
+
+        //Verfifica el primer campo sea igual con el segundo
+        $this->assertEquals($post->title, $data['title']);
+        $this->assertEquals($post->content, $data['content']);
+
+
+    }
+
+
 }

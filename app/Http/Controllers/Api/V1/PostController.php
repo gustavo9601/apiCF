@@ -59,9 +59,20 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
+
+
+    //usamos el posrRquest que ya trae las reglas de validacion
+    // en ves del Request solo
     public function update(Request $request, Post $post)
     {
-        //
+
+       $post->update($request->all());
+
+        return response()->json([
+            'data' => $post
+        ], 200);
+
+
     }
 
     /**

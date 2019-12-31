@@ -61,4 +61,14 @@ class PostRequest extends FormRequest
 
     }
 
+
+    //Funcion para sanitizar o filtrar los campos
+    public function filters()
+    {
+        return [
+            'title' => 'trim|lowercase',
+            'content' => 'trim|capitalize|escape'
+        ];
+    }
+
 }
