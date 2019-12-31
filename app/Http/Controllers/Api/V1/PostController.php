@@ -6,6 +6,10 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+
+//Usamos el archivo creado para controlar las validaciones
+use App\Http\Requests\PostRequest;
+
 class PostController extends Controller
 {
     /**
@@ -24,7 +28,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    //usamos el posrRquest que ya trae las reglas de validacion
+    // en ves del Request solo
+    public function store(PostRequest $request)
     {
         //le pasamos al modelo todo lo recibido por post y lo creamos
         $post = Post::create($request->all());
