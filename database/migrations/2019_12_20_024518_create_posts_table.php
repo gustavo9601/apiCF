@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('author_id');
             $table->string('title');
-            $table->string('content');
+            $table->string('content', 500);
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');

@@ -125,4 +125,13 @@ class PostTest extends TestCase
     }
 
 
+    public function test_get_all_posts(){
+
+        $response = $this->json('GET', $this->baseUrl . 'posts');
+
+        $response->assertStatus(201);
+
+
+    }
+
 }
