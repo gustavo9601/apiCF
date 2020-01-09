@@ -24,10 +24,10 @@ class AuthController extends Controller
         $validator = \Validator::make($request->all(),
             //Arreglo de validaciones
             [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255|email|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ],
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|max:255|email|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ],
             //Arreglo de respuestas a validaciones
             [
                 'name.required' => 'El nombre es requerido',
@@ -71,8 +71,8 @@ class AuthController extends Controller
                 return response()->json([
                     'token' => $token
                 ]);
-            } else {
 
+            } else {
                 return response()->json([
                     'error' => 'Password o Email son incorrectos'
                 ], 422);

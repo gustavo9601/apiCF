@@ -10,6 +10,11 @@ use App\Http\Controllers\Controller;
 //Usamos el archivo creado para controlar las validaciones
 use App\Http\Requests\PostRequest;
 
+//Recursos
+use App\Http\Resources\PostResource;
+use App\Http\Resources\PostCollection;
+
+
 class PostController extends Controller
 {
     /**
@@ -19,10 +24,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+
+        return new PostCollection(Post::all());
+        /*$posts = Post::all();
         return response()->json([
             'data' => $posts
-        ], 201);
+        ], 201);*/
     }
 
     /**
@@ -53,10 +60,17 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+
+
+        PostResource::withoutWrapping(); //permite que no se retorne dentro del indice data
+
+        //retornamos una clase, con el valor del post para que el recurso se encargue de la trasnformacion de la data a mostrar
+        return new PostResource($post);
+
     //Como recibimos el post id en la peticion, podemos retornar el post por inyeccion se retorna todo lo encontrado en la consulta
-        return response()->json([
+       /* return response()->json([
             'data' => $post
-        ], 200);
+        ], 200);*/
     }
 
     /**
