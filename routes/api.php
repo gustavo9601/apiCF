@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group([
     "prefix" => "v1",  //le adiciona al path /v1
     "namespace" => 'Api\V1',  // Le iindica el directorio donde buscar los controladores
-    //"middleware" => ["auth:api"]  //middleware devalidacion
+    "middleware" => ["auth:api"]  //middleware devalidacion
 ], function () {
 
     //apiResource crea rutas de recurso para apis
@@ -34,12 +34,19 @@ Route::group([
     //Route::apiResources(['nameRuta'=> 'controlador']);  //cuando son varias rutas
     Route::apiResources([
         'posts' => 'PostController',
-        //'users' => 'UserController'
+        'users' => 'UserController'
     ]);
+
+    //Registrando rutas que serviran como relacion entre 2 tablas
+    Route::get('/posts/{post}/relationships/author', 'PostRelationShipController@author')->name('posts.relationships.author');
+    Route::get('/posts/{post}/relationships/comments', 'PostRelationShipController@comments')->name('posts.relationships.comments');
 });
 
 
-Route::post('/login', 'Api\AuthController@login');
+Route::post('/login', [
+    'as' => 'login',
+    'uses' => 'Api\AuthController@login'
+]);
 Route::post('/signup', 'Api\AuthController@signup');
 
 

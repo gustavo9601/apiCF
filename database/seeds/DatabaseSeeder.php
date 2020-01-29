@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
         factory(\App\User::class)->times(50)->create();
 
         //Creando post
-        factory(\App\Models\Post::class)->times(10)->create();
+        factory(\App\Models\Post::class)->times(100)->create();
 
         //Creando comentarios
-        factory(\App\Models\Comment::class)->times(20)->create();
+        factory(\App\Models\Comment::class)->times(500)->create();
 
 
     }

@@ -25,8 +25,16 @@ class PostController extends Controller
     public function index()
     {
 
-        return new PostCollection(Post::all());
-        /*$posts = Post::all();
+        //retornamos la coleccion pero paginada
+        return new PostCollection(Post::paginate(2));
+
+        /*Alternativo usando resource pero retornando todos los registors*/
+        //return new PostCollection(Post::all());
+
+
+        /*
+         * Alternativa sin Resources
+         * $posts = Post::all();
         return response()->json([
             'data' => $posts
         ], 201);*/

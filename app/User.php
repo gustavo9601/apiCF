@@ -45,4 +45,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Post', 'author_id');
     }
 
+
+    //Funcion que retornara el valor de la columna admin
+    public function isAdmin(){
+        return $this->admin;
+    }
+
 }
