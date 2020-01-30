@@ -26,7 +26,8 @@ class AuthController extends Controller
             [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|max:255|email|unique:users',
-                'password' => 'required|string|min:6|confirmed',
+                'password' => 'required|string|min:6',
+                //'password' => 'required|string|min:6|confirmed',
             ],
             //Arreglo de respuestas a validaciones
             [
@@ -64,14 +65,11 @@ class AuthController extends Controller
         if ($user) {
             //verifica la contraseña hasheada de la bd con la contraseña pasada en el request
             if (Hash::check($request->password, $user->password)) {
-
                 //La funcion createToken es propia de laravel passport implementada en el modelo
                 $token = $user->createToken('Esto es un token')->accessToken;
-
                 return response()->json([
                     'token' => $token
                 ]);
-
             } else {
                 return response()->json([
                     'error' => 'Password o Email son incorrectos'

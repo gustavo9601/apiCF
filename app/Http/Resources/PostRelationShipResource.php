@@ -6,6 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\AuthorIdentifierResource;
 use App\Http\Resources\PostCommentRelationshipCollection;
 
+
+
 class PostRelationShipResource extends JsonResource
 {
     /**
@@ -19,12 +21,13 @@ class PostRelationShipResource extends JsonResource
         return [
             'author' => [
                 'links' => [
-                    'self' => route('posts.show', ['post' => $this->id]),
-                    'related' => route('posts.relationships.author', ['post' => $this->id])
+                    'self' => route('posts.relationships.author', ['post' => $this->id]),
+                    'related' => route('posts.author', ['post' => $this->id])
                 ],
                 'data' => new AuthorIdentifierResource($this->author)  //le pasamos la relacion del modelo
             ],
-            'comments' => new PostCommentRelationshipCollection($this->comments)  //le pasamos la relacion del demolo , "comments"
+            'comments' => (new PostCommentRelationshipCollection($this->comments))  //le pasamos la relacion del demolo , "comments"
+                            ->additional(['posts' => $this])  // adiciona el retorno del recurso un arreglo
         ];
     }
 }

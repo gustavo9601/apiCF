@@ -34,12 +34,16 @@ Route::group([
     //Route::apiResources(['nameRuta'=> 'controlador']);  //cuando son varias rutas
     Route::apiResources([
         'posts' => 'PostController',
-        'users' => 'UserController'
+        'users' => 'UserController',
+        'comments' => 'CommentController'
     ]);
 
     //Registrando rutas que serviran como relacion entre 2 tablas
     Route::get('/posts/{post}/relationships/author', 'PostRelationShipController@author')->name('posts.relationships.author');
+    Route::get('/posts/{post}/author', 'PostRelationShipController@author')->name('posts.author');
+
     Route::get('/posts/{post}/relationships/comments', 'PostRelationShipController@comments')->name('posts.relationships.comments');
+    Route::get('/posts/{post}/comments', 'PostRelationShipController@comments')->name('posts.comments');
 });
 
 

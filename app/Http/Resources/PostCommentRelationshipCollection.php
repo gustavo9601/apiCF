@@ -14,11 +14,14 @@ class PostCommentRelationshipCollection extends ResourceCollection
      */
     public function toArray($request)
     {
+        // capturamos el arreglo adicional enviado a este recurso
+        $posts = $this->additional['posts'];
+
         return [
             'data' => CommentIdentifierResource::collection($this->collection),  //de esta forma usamos el recurso CommentIdenti... como una collection para que se itere por todos los registros
             'links' => [
-                'self' => '',
-                'related' => ''
+                'self' => route('posts.relationships.comments', ['posts' => $posts]),
+                'related' => route('posts.comments', ['posts' => $posts])
             ]
         ];
     }

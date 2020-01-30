@@ -26,7 +26,7 @@ class PostController extends Controller
     {
 
         //retornamos la coleccion pero paginada
-        return new PostCollection(Post::paginate(2));
+        return new PostCollection(Post::paginate(10));
 
         /*Alternativo usando resource pero retornando todos los registors*/
         //return new PostCollection(Post::all());
@@ -54,9 +54,17 @@ class PostController extends Controller
         //le pasamos al modelo todo lo recibido por post y lo creamos
         $post = Post::create($request->all());
 
+
+
+        return (new PostResource($post))
+                ->response()
+                ->setStatusCode(200);   // usando el recurso para retornar, y cambiano el codigo de status
+
+        // forma convencional de retornr
         return response()->json([
             'data' => $post
         ], 201);
+
     }
 
     /**

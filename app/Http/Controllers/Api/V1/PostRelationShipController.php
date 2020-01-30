@@ -10,6 +10,7 @@ use App\Models\Post;
 
 //resource
 use App\Http\Resources\UserResource;
+use App\Http\Resources\CommentResource;
 
 class PostRelationShipController extends Controller
 {
@@ -22,6 +23,7 @@ class PostRelationShipController extends Controller
     }
 
     public function comments(Post $post){
-
+        // con colection retornara una coleccion "arreglo" en el formato de CommentResource
+        return CommentResource::collection($post->comments);
     }
 }
